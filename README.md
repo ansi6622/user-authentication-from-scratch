@@ -1,18 +1,6 @@
-# Sinatra template application
+# Building User Authentication from scratch
 
-This application can be used as a starting point for a [Postgres](http://www.postgresql.org/)
-database backed, via [Sequel](http://sequel.jeremyevans.net/), application that uses
-[Sinatra](http://www.sinatrarb.com/). It can be deployed to [Heroku](https://www.heroku.com/).
-
-There are a few things you need to change for your application:
-
-1. Change `scrips/create_databases.sql` to create both your development and test databases.
-1. Copy the `.env.example` file to `.env`.
-1. Change the `.env` file to include your database connection strings for both your development
-and test databases. This file is ignored by git (see .gitignore) to protect your secrets
-from the outside world.
-1. Add your migrations to the `migrations` folder. Once you have one migration there, you can
-delete the `.gitsave` file.
+This application demonstrates implementing user authentication from scratch.
 
 ## Development
 1. `bundle install`
