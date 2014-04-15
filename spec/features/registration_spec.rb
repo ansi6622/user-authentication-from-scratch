@@ -14,6 +14,7 @@ feature 'User registration' do
 
     fill_in 'email', :with => 'user@example.com'
     fill_in 'password', :with => 'my_password'
+    fill_in 'password_confirmation', :with => 'my_password'
     click_button 'Register'
 
     expect(page).to have_content 'Welcome, user@example.com'
@@ -55,5 +56,17 @@ feature 'User registration' do
     click_button 'Log in'
 
     expect(page).to have_content 'Email / password is invalid'
+  end
+
+  scenario 'User can not register if they password confirmation does not match' do
+    visit '/'
+    click_link 'Register'
+
+    fill_in 'email', :with => 'user@example.com'
+    fill_in 'password', :with => 'my_password'
+    fill_in 'password_confirmation', :with => 'not_my_password'
+    click_button 'Register'
+
+    expect(page).to have_content 'Password and confirmation do not match'
   end
 end

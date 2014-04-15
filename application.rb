@@ -22,17 +22,25 @@ class Application < Sinatra::Application
   end
 
   get '/register' do
-    erb :register
+    erb :register, locals: {error: nil}
   end
 
   post '/register' do
     email = params[:email]
-    password_hash = BCrypt::Password.create(params[:password])
+    password = params[:password]
+    password_confirmation = params[:password_confirmation]
 
-    user_id = DB[:users].insert(:email => email, :password => password_hash)
+    if password != password_confirmation
+      erb :register, locals: {error: 'Password and confirmation do not match'}
+    else
+      password_hash = BCrypt::Password.create(password)
 
-    session[:user_id] = user_id
-    redirect '/'
+      user_id = DB[:users].insert(:email => email, :password => password_hash)
+
+      session[:user_id] = user_id
+      redirect '/'
+    end
+
   end
 
   get '/log_in' do
