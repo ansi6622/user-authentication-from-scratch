@@ -34,4 +34,9 @@ class Application < Sinatra::Application
     session[:user_id] = user_id
     redirect '/'
   end
+
+  get '/log_out' do
+    session.clear
+    redirect '/'
+  end
 end

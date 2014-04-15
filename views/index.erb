@@ -1,9 +1,10 @@
-<h1>
-  <% if user.nil? %>
+<% if user.nil? %>
+    <h1>
       You are not logged in.
-  <% else %>
-      Welcome, <%= user[:email] %>
-  <% end %>
-</h1>
+    </h1>
+    <a href="/register">Register</a>
+<% else %>
+    <h1>Welcome, <%= user[:email] %></h1>
+    <a href="/log_out">Log out</a>
+<% end %>
 
-<a href="/register">Register</a>
