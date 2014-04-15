@@ -69,4 +69,16 @@ feature 'User registration' do
 
     expect(page).to have_content 'Password and confirmation do not match'
   end
+
+  scenario 'User can not register if password is less than three characters' do
+    visit '/'
+    click_link 'Register'
+
+    fill_in 'email', :with => 'user@example.com'
+    fill_in 'password', :with => '12'
+    fill_in 'password_confirmation', :with => '12'
+    click_button 'Register'
+
+    expect(page).to have_content 'Password must be at least three characters'
+  end
 end
