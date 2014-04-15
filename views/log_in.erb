@@ -2,6 +2,12 @@
   Register
 </h1>
 
+<% if !error.nil? %>
+    <p class="error">
+      <%= error %>
+    </p>
+<% end %>
+
 <form action="/log_in" method="post">
   <table>
     <tr>

@@ -36,17 +36,22 @@ class Application < Sinatra::Application
   end
 
   get '/log_in' do
-    erb :log_in
+    erb :log_in, locals: {error: nil}
   end
 
   post '/log_in' do
     email = params[:email]
+    password = params[:password]
 
     user = DB[:users].where(email: email).to_a.first
 
-    session[:user_id] = user[:id]
+    if BCrypt::Password.new(user[:password]) == password
+      session[:user_id] = user[:id]
 
-    redirect '/'
+      redirect '/'
+    else
+      erb :log_in, locals: {error: 'Email / password is invalid'}
+    end
   end
 
   get '/log_out' do
