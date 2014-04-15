@@ -35,6 +35,20 @@ class Application < Sinatra::Application
     redirect '/'
   end
 
+  get '/log_in' do
+    erb :log_in
+  end
+
+  post '/log_in' do
+    email = params[:email]
+
+    user = DB[:users].where(email: email).to_a.first
+
+    session[:user_id] = user[:id]
+
+    redirect '/'
+  end
+
   get '/log_out' do
     session.clear
     redirect '/'
