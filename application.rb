@@ -60,4 +60,18 @@ class Application < Sinatra::Application
     session.clear
     redirect '/'
   end
+
+  get '/users' do
+    user = DB[:users].where(id: session[:user_id]).to_a.first
+
+    if user[:administrator]
+      erb :users, locals: {users: DB[:users].to_a}
+    else
+      redirect '/not_authorized'
+    end
+  end
+
+  get '/not_authorized' do
+    erb :not_authorized
+  end
 end

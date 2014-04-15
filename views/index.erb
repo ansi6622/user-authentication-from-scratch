@@ -7,5 +7,8 @@
 <% else %>
     <h1>Welcome, <%= user[:email] %></h1>
     <a href="/log_out">Log out</a>
+    <% if user[:administrator] %>
+        <a href="/users">View all users</a>
+    <% end %>
 <% end %>
 
