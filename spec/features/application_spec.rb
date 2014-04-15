@@ -44,4 +44,16 @@ feature 'User registration' do
 
     expect(page).to have_content 'Welcome, user@example.com'
   end
+
+  scenario 'User can not log in if they have not registered' do
+    visit '/'
+
+    click_link 'Log in'
+
+    fill_in 'email', :with => 'user_does_not_exist@example.com'
+    fill_in 'password', :with => 'password'
+    click_button 'Log in'
+
+    expect(page).to have_content 'Email / password is invalid'
+  end
 end

@@ -45,7 +45,9 @@ class Application < Sinatra::Application
 
     user = DB[:users].where(email: email).to_a.first
 
-    if BCrypt::Password.new(user[:password]) == password
+    if user.nil?
+      erb :log_in, locals: {error: 'Email / password is invalid'}
+    elsif BCrypt::Password.new(user[:password]) == password
       session[:user_id] = user[:id]
 
       redirect '/'
