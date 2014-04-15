@@ -5,6 +5,8 @@ Capybara.app = Application
 
 feature 'User registration' do
   scenario 'User can register, log out and log back in again' do
+    cleanup_databases
+
     visit '/'
 
     expect(page).to have_content 'You are not logged in'
@@ -47,6 +49,7 @@ feature 'User registration' do
   end
 
   scenario 'User can not log in if they have not registered' do
+    cleanup_databases
     visit '/'
 
     click_link 'Log in'
@@ -59,6 +62,7 @@ feature 'User registration' do
   end
 
   scenario 'User can not register if they password confirmation does not match' do
+    cleanup_databases
     visit '/'
     click_link 'Register'
 
@@ -71,6 +75,7 @@ feature 'User registration' do
   end
 
   scenario 'User can not register if password is less than three characters' do
+    cleanup_databases
     visit '/'
     click_link 'Register'
 
@@ -83,6 +88,7 @@ feature 'User registration' do
   end
 
   scenario 'User can not register if password is blank' do
+    cleanup_databases
     visit '/'
     click_link 'Register'
 
@@ -92,5 +98,21 @@ feature 'User registration' do
     click_button 'Register'
 
     expect(page).to have_content 'Password must not be blank'
+  end
+
+  scenario 'User can not register if email is already taken' do
+    cleanup_databases
+    password = BCrypt::Password.create('password')
+    DB[:users].insert(email: 'user@example.com', password: password)
+
+    visit '/'
+    click_link 'Register'
+
+    fill_in 'email', :with => 'user@example.com'
+    fill_in 'password', :with => 'another_password'
+    fill_in 'password_confirmation', :with => 'another_password'
+    click_button 'Register'
+
+    expect(page).to have_content 'Email is already taken'
   end
 end

@@ -13,8 +13,12 @@ RSpec.configure do |config|
 end
 
 def cleanup_databases
-    migration_task = Rake::Task['db:migrate']
-    migration_task.invoke(0)
-    migration_task.reenable
-    migration_task.invoke
+  p "Before down"
+  p DB[:users].to_a
+  migration_task = Rake::Task['db:migrate']
+  migration_task.invoke(0)
+  migration_task.reenable
+  migration_task.invoke
+  p "At end"
+  p DB[:users].to_a
 end
