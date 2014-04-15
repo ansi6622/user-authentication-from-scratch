@@ -81,4 +81,16 @@ feature 'User registration' do
 
     expect(page).to have_content 'Password must be at least three characters'
   end
+
+  scenario 'User can not register if password is blank' do
+    visit '/'
+    click_link 'Register'
+
+    fill_in 'email', :with => 'user@example.com'
+    fill_in 'password', :with => ''
+    fill_in 'password_confirmation', :with => ''
+    click_button 'Register'
+
+    expect(page).to have_content 'Password must not be blank'
+  end
 end

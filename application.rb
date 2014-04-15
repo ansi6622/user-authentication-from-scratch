@@ -30,7 +30,9 @@ class Application < Sinatra::Application
     password = params[:password]
     password_confirmation = params[:password_confirmation]
 
-    if password.length < 3
+    if password.empty?
+      erb :register, locals: {error: 'Password must not be blank'}
+    elsif password.length < 3
       erb :register, locals: {error: 'Password must be at least three characters'}
     elsif password != password_confirmation
       erb :register, locals: {error: 'Password and confirmation do not match'}
