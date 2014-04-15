@@ -6,8 +6,8 @@ gem 'pg', '~> 0.17.1'
 gem 'dotenv', '~> 0.10.0'
 gem 'bcrypt', '~> 3.1.7'
 
-
 group :test do
+  gem 'database_cleaner', '~> 1.2.0'
   gem 'rspec', '~> 2.14.1'
   gem 'capybara', '~> 2.2.1'
   gem 'rerun', '~> 0.9.0'

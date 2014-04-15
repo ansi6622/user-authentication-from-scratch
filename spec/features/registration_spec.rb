@@ -93,4 +93,19 @@ feature 'User registration' do
 
     expect(page).to have_content 'Password must not be blank'
   end
+
+  scenario 'User can not register if email is already taken' do
+    password = BCrypt::Password.create('password')
+    DB[:users].insert(email: 'user@example.com', password: password)
+
+    visit '/'
+    click_link 'Register'
+
+    fill_in 'email', :with => 'user@example.com'
+    fill_in 'password', :with => 'another_password'
+    fill_in 'password_confirmation', :with => 'another_password'
+    click_button 'Register'
+
+    expect(page).to have_content 'Email is already taken'
+  end
 end
