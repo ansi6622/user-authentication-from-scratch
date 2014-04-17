@@ -30,9 +30,9 @@ class Application < Sinatra::Application
     password = params[:password]
     password_confirmation = params[:password_confirmation]
 
-    users_with_email = DB[:users].where(email: email).to_a
+    number_of_users_with_email = DB[:users].where(email: email).count
 
-    if users_with_email.length > 0
+    if number_of_users_with_email > 0
       erb :register, locals: {error: 'Email is already taken'}
     elsif password.strip.empty?
       erb :register, locals: {error: 'Password must not be blank'}
