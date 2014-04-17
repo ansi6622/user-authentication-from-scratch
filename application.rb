@@ -34,7 +34,7 @@ class Application < Sinatra::Application
 
     if users_with_email.length > 0
       erb :register, locals: {error: 'Email is already taken'}
-    elsif password.empty?
+    elsif password.strip.empty?
       erb :register, locals: {error: 'Password must not be blank'}
     elsif password.length < 3
       erb :register, locals: {error: 'Password must be at least three characters'}

@@ -94,6 +94,18 @@ feature 'User registration' do
     expect(page).to have_content 'Password must not be blank'
   end
 
+  scenario 'User an not register if password is 3 or more whitespaces' do
+    visit '/'
+    click_link 'Register'
+
+    fill_in 'email', :with => 'user@example.com'
+    fill_in 'password', :with => '   '
+    fill_in 'password_confirmation', :with => '   '
+    click_button 'Register'
+
+    expect(page).to have_content 'Password must not be blank'
+  end
+
   scenario 'User can not register if email is already taken' do
     password = BCrypt::Password.create('password')
     DB[:users].insert(email: 'user@example.com', password: password)
